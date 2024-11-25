@@ -79,7 +79,7 @@ RUN poetry install --no-dev
 ##########################
 # Clean production image #
 ##########################
-FROM python:3.11-slim-bookworm AS prod
+FROM python:3.14.0a1-slim-bookworm AS prod
 
 WORKDIR /app
 
