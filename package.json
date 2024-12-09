@@ -36,7 +36,7 @@
   "dependencies": {
     "@babel/runtime": "^7.20.13",
     "@urql/svelte": "^3.0.3",
-    "codemirror": "^5.65.11",
+    "codemirror": "^5.65.18",
     "d3": "^3.5.17",
     "graphql": "^16.8.1",
     "jquery": "^3.6.3",
