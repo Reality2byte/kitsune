@@ -34,7 +34,7 @@
   },
   "license": "MPL-2.0",
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
+    "@babel/runtime": "^7.26.0",
     "@urql/svelte": "^3.0.3",
     "codemirror": "^5.65.11",
     "d3": "^3.5.17",
