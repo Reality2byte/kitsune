@@ -626,70 +626,61 @@ import collapsibleAccordionInit from "sumo/js/protocol-details-init";
 
   function initRevisionList() {
     var $form = $('#revision-list form.filter');
+    var $searchForm = $('.simple-search-form');
 
     if (!$form.length) {
       return;
     }
 
-    // Retrieve form data from sessionStorage, excluding pagination parameters
-    let formData = {};
-    const savedFormData = sessionStorage.getItem('revision-list-filter');
+    const initialUrl = window.location.href;
+    window.history.replaceState({ url: initialUrl }, '', initialUrl);
 
-    if (savedFormData) {
-      try {
-        formData = JSON.parse(savedFormData);
-      } catch (e) {
-        formData = {};
-        sessionStorage.removeItem('revision-list-filter');
-      }
-    }
+    function updateRevisionList(query, pushState = true) {
+      $('.loading').show();
 
-    // Populate form fields with saved data
-    for (let [name, value] of Object.entries(formData)) {
-      const field = $form.find(`[name="${name}"]`);
-      if (field.length) {
-        field.val(value);
-      }
-    }
-
-    // Only update if there are saved filters
-    if (Object.keys(formData).length > 0) {
-      updateRevisionList();
-    }
-
-    function updateRevisionList(query) {
       if (query === undefined) {
         query = $form.serialize();
       }
 
-      if (query.charAt(0) !== '?') {
-        query = '?' + query;
+      const baseUrl = $form.attr('action');
+      const url = new URL(baseUrl, window.location.origin);
+      const params = new URLSearchParams(query);
+
+      // Update URL parameters while preserving search form state
+      for (let [key, value] of params) {
+        url.searchParams.set(key, value);
       }
 
-      // Preserve any existing page parameter from the URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const pageParam = urlParams.get('page');
-      if (pageParam && !query.includes('page=')) {
-        query += `&page=${pageParam}`;
+      if (pushState) {
+        window.history.pushState({ url: url.toString() }, '', url);
       }
-
-      var url = $form.attr('action') + query;
 
       $('#revisions-fragment').css('opacity', 0);
-      $.get(url + '&fragment=1', function (data) {
+      $.get(url.toString() + (url.search ? '&' : '?') + 'fragment=1', function (data) {
         $('.loading').hide();
         $('#revisions-fragment').html(data).css('opacity', 1);
-
-        // Update URL without triggering page reload
-        const newUrl = window.location.pathname + query;
-        window.history.pushState({}, '', newUrl);
       });
     }
 
-    // Handle filter changes
+    // Handle browser back/forward
+    $(window).on('popstate', function (e) {
+      if (e.originalEvent.state) {
+        const url = new URL(e.originalEvent.state.url);
+        const params = new URLSearchParams();
+
+        // Copy only the parameters that belong to the revision list
+        for (let [key, value] of url.searchParams) {
+          if (!$searchForm.find(`[name="${key}"]`).length) {
+            params.set(key, value);
+          }
+        }
+
+        updateRevisionList(params.toString(), false);
+      }
+    });
+
     var timeout;
     $form.on('input change', 'input, select', function () {
-      $('.loading').show();
       clearTimeout(timeout);
       timeout = setTimeout(function () {
         updateRevisionList();
@@ -709,7 +700,17 @@ import collapsibleAccordionInit from "sumo/js/protocol-details-init";
     // Handle pagination clicks
     $('#revisions-fragment').on('click', '.pagination a', function (e) {
       e.preventDefault();
-      updateRevisionList($(this).attr('href').split('?')[1]);
+      const paginationUrl = new URL($(this).attr('href'), window.location.origin);
+
+      // Only take parameters that are not part of the search form
+      const params = new URLSearchParams();
+      for (let [key, value] of paginationUrl.searchParams) {
+        if (!$searchForm.find(`[name="${key}"]`).length) {
+          params.set(key, value);
+        }
+      }
+
+      updateRevisionList(params.toString(), true);
     });
 
     // Remove submit button and prevent form submission
@@ -720,7 +721,6 @@ import collapsibleAccordionInit from "sumo/js/protocol-details-init";
       }
     });
   }
-
 
   init();
 

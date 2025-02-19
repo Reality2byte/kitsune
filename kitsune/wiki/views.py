@@ -285,7 +285,7 @@ def document(request, document_slug, document=None):
     breadcrumbs = [(None, trimmed_title)]
     # Get the dominant topic, and all parent topics. Save the topic chosen for
     # picking a product later.
-    document_topics = doc.topics.order_by("display_order")
+    document_topics = doc.get_topics().order_by("display_order")
     if len(document_topics) > 0:
         topic = document_topics.first()
         breadcrumbs.append((topic.get_absolute_url(product.slug), topic.title))
@@ -304,6 +304,11 @@ def document(request, document_slug, document=None):
 
     is_first_revision = doc.revisions.filter(is_approved=True).count() == 1
 
+    show_aaq_widget = (
+        not (doc.parent and doc.parent.slug == "get-community-support")
+        and doc.slug != "get-community-support"
+    )
+
     data = {
         "document": doc,
         "is_first_revision": is_first_revision,
@@ -318,6 +323,7 @@ def document(request, document_slug, document=None):
         "ga_products": ga_products,
         "ga_article_locale": ga_article_locale,
         "related_products": doc.related_products.exclude(pk=product.pk),
+        "show_aaq_widget": show_aaq_widget,
         "breadcrumb_items": breadcrumbs,
         "document_css_class": document_css_class,
         "any_localizable_revision": any_localizable_revision,
@@ -1697,10 +1703,10 @@ def recent_revisions(request):
     form.is_valid()
 
     filters = {}
+
     if hasattr(form, "cleaned_data"):
         if form.cleaned_data.get("locale"):
             filters.update(document__locale=form.cleaned_data["locale"])
-
         # Only apply user filter if there are valid users
         if form.cleaned_data.get("users"):
             filters.update(creator__in=form.cleaned_data["users"])
@@ -1717,7 +1723,7 @@ def recent_revisions(request):
     c = {
         "revisions": revs,
         "form": form,
-        "locale": request.GET.get("locale", request.LANGUAGE_CODE),
+        "locale": request.GET.get("locale") or request.LANGUAGE_CODE,
     }
     if fragment:
         template = "wiki/includes/recent_revisions_fragment.html"
