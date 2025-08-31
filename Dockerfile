@@ -74,7 +74,7 @@ RUN ./scripts/l10n-fetch-lint-compile.sh && \
 ##########################
 # Clean production image #
 ##########################
-FROM python:3.11-slim-bookworm AS prod
+FROM python:3.14.0a3-slim-bookworm AS prod
 
 WORKDIR /app
 
