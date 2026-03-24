@@ -1986,11 +1986,11 @@ wheels = [
 
 [[package]]
 name = "justhtml"
-version = "1.12.0"
+version = "1.13.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/e9/bb/aad995e1e99ff7dc99b45e639efb6a116d887399984e2d214c322b665320/justhtml-1.12.0.tar.gz", hash = "sha256:ef6d6b020c690db07db4359e2c921e7fc3770e8e61887ea4b57b2d53388c2265", size = 378536, upload-time = "2026-03-17T21:58:54.113Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/fb/17/cba367880227009c6f0e385c0ef9162ca34b1250834ed3ee5fba7febadb3/justhtml-1.13.0.tar.gz", hash = "sha256:6538a8b54a51d99fc11574a11afe968b64b002247045c8b3f46f1b6f64d8ce78", size = 379802, upload-time = "2026-03-21T20:47:09.413Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c6/f4/acb12ff9d842ffa959d3366e25279c406f2a2211a24ad561e231ef8356b9/justhtml-1.12.0-py3-none-any.whl", hash = "sha256:4ca4d110694d51c4643e992ee72fe68c1eca343011de3370f54c15cab32c24a8", size = 134831, upload-time = "2026-03-17T21:58:52.7Z" },
+    { url = "https://files.pythonhosted.org/packages/28/b8/f60e28f237f17917710d1eb4b7760f05186b96f5b393c53364a512b038b9/justhtml-1.13.0-py3-none-any.whl", hash = "sha256:9a10d606bbf9185d53cdf940528c80d8d8e13c714e4c0c2a8d66ef5ffefed99c", size = 135318, upload-time = "2026-03-21T20:47:08.185Z" },
 ]
 
 [[package]]
@@ -2555,7 +2555,7 @@ wheels = [
 
 [[package]]
 name = "nltk"
-version = "3.9.3"
+version = "3.9.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
@@ -2563,9 +2563,9 @@ dependencies = [
     { name = "regex" },
     { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e1/8f/915e1c12df07c70ed779d18ab83d065718a926e70d3ea33eb0cd66ffb7c0/nltk-3.9.3.tar.gz", hash = "sha256:cb5945d6424a98d694c2b9a0264519fab4363711065a46aa0ae7a2195b92e71f", size = 2923673, upload-time = "2026-02-24T12:05:53.833Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/74/a1/b3b4adf15585a5bc4c357adde150c01ebeeb642173ded4d871e89468767c/nltk-3.9.4.tar.gz", hash = "sha256:ed03bc098a40481310320808b2db712d95d13ca65b27372f8a403949c8b523d0", size = 2946864, upload-time = "2026-03-24T06:13:40.641Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c2/7e/9af5a710a1236e4772de8dfcc6af942a561327bb9f42b5b4a24d0cf100fd/nltk-3.9.3-py3-none-any.whl", hash = "sha256:60b3db6e9995b3dd976b1f0fa7dec22069b2677e759c28eb69b62ddd44870522", size = 1525385, upload-time = "2026-02-24T12:05:46.54Z" },
+    { url = "https://files.pythonhosted.org/packages/9d/91/04e965f8e717ba0ab4bdca5c112deeab11c9e750d94c4d4602f050295d39/nltk-3.9.4-py3-none-any.whl", hash = "sha256:f2fa301c3a12718ce4a0e9305c5675299da5ad9e26068218b69d692fda84828f", size = 1552087, upload-time = "2026-03-24T06:13:38.47Z" },
 ]
 
 [[package]]
